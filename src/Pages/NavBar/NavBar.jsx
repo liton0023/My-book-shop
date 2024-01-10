@@ -1,12 +1,48 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../Provider/AuthProvider/AuthProvider';
 const NavBar = () => {
-  
+const {user,logOut}=useContext(AuthContext);
+
+
+
+  const handleLogOut=()=>{
+    logOut()
+    .then(()=>{ })
+    .catch(error=>console.log(error))
+
+}
+const navOptions=<> 
+<li><Link to='/'>HOME</Link></li>
+<li><Link to='/menu'>MENU</Link></li>
+<li><Link to='/order'>ORDER</Link></li>
+{/* <li>
+ <Link to='/dashboard/mycart'>
+ <button className="flex gap-2">
+<FaShoppingCart></FaShoppingCart>
+<span className="badge badge-secondary"></span>
+</button>
+ </Link>
+</li> */}
+
+{
+user?
+<> 
+<span>{user?.displayName}</span>
+<button onClick={handleLogOut} className="btn btn-ghost">LOGOUT</button> </>:
+<> <li><Link to='/login'>LOGIN</Link></li>
+</>
+}
+
+</>
     return (
         <>
             <div className=" navbar fixed z-10 bg-opacity-30 max-w-screen-xl top-0 bg-black text-white">
   <div className="flex-1">
     <a className="btn btn-ghost text-3xl">BOOK SHOP</a>
+    <ul className=' flex justify-center items-center mx-auto gap-10'>
+      {navOptions}
+    </ul>
   </div>
   <div className="flex-none">
     <div className="dropdown dropdown-end">
@@ -17,7 +53,7 @@ const NavBar = () => {
         </div>
       </div>
       <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
-        <div className="card-body">
+        <div className="card-body text-black">
           <span className="font-bold text-lg">8 Items</span>
           <span className="text-info">Subtotal: $999</span>
           <div className="card-actions">
@@ -32,7 +68,7 @@ const NavBar = () => {
           <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
         </div>
       </div>
-      <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+      <ul tabIndex={0} className="menu menu-sm text-black dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
         <li>
           <a className="justify-between">
             Profile
@@ -40,7 +76,6 @@ const NavBar = () => {
           </a>
         </li>
         <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
       </ul>
     </div>
   </div>
