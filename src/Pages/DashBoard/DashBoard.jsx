@@ -19,7 +19,7 @@ import { NavLink, Outlet } from "react-router-dom";
 const DashBoard = () => {
     const isAdmin=true;
     return (
-        <div className="drawer mt-16 lg:drawer-open ">
+        <div className="drawer lg:drawer-open ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center justify-center">
         {/* Page content here */}
@@ -43,7 +43,7 @@ const DashBoard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="addItem">
+                <NavLink to="addbook">
                   <FaUtensils></FaUtensils> Add Items
                 </NavLink>
               </li>
@@ -58,7 +58,7 @@ const DashBoard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="users">
+                <NavLink to="allusers">
                  <FaUser></FaUser> All Users
                 </NavLink>
               </li>
