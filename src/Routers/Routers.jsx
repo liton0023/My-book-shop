@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Main from '../Layout/Main';
+import AllBooks from '../Pages/AllBooks/AllBooks';
 import AddBook from '../Pages/DashBoard/AddBook/AddBook';
 import AllUsers from '../Pages/DashBoard/AllUsers/AllUsers';
 import DashBoard from '../Pages/DashBoard/DashBoard';
@@ -26,6 +27,10 @@ export const router =createBrowserRouter([
                 path:'/login',
                 element:<LogIn></LogIn>
             },
+        {
+            path:'/books',
+            element:<AllBooks></AllBooks>
+        }
         ],
     },
     {

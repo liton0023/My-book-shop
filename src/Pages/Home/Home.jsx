@@ -1,12 +1,12 @@
 import React from 'react';
-import Card from '../Card/Card';
+import AllBooks from '../AllBooks/AllBooks';
 import Search from '../Search/Search';
 
 const Home = () => {
     return (
         <div className='mt-20 p-10'>
             <Search></Search>
-            <Card></Card>
+           <AllBooks></AllBooks>
         </div>
     );
 };

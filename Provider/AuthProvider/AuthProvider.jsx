@@ -10,7 +10,7 @@ import {
     updateProfile
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from 'react';
-import { app } from '../../src/Firebase/firebase.config';
+import { app } from "../../firebase.config";
 
 export const AuthContext =createContext(null);
 const auth = getAuth(app)
@@ -51,7 +51,7 @@ const AuthProvider = ({children}) => {
  useEffect(()=>{
     const unsuscribe = onAuthStateChanged(auth,(currentUser)=>{
         setUser(currentUser);
-        setLoading(false);
+        // setLoading(false);
 
         if(currentUser){
             axios.post('http://localhost:5000/jwt',{
@@ -67,9 +67,9 @@ const AuthProvider = ({children}) => {
         }
     });
     return ()=>{
-        return unsuscribe;
+         unsuscribe();
     }
- },[]);
+ });
 
  const authInfo={
     user,
