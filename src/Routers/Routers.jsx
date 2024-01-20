@@ -5,9 +5,12 @@ import AllBooks from '../Pages/AllBooks/AllBooks';
 import AddBook from '../Pages/DashBoard/AddBook/AddBook';
 import AllUsers from '../Pages/DashBoard/AllUsers/AllUsers';
 import DashBoard from '../Pages/DashBoard/DashBoard';
+import ManageBook from '../Pages/DashBoard/ManageBook/ManageBook';
+import UpdateBook from '../Pages/DashBoard/ManageBook/UpdateBook';
 import Home from '../Pages/Home/Home';
 import LogIn from '../Pages/LogIn/LogIn';
 import SingUp from '../Pages/SingUp/SingUp';
+import MyCart from '../Pages/UserDashbord/MyCart';
 import PrivetRoutes from './PrivetRoutes';
 
 export const router =createBrowserRouter([
@@ -48,6 +51,18 @@ export const router =createBrowserRouter([
         {
             path:'allusers',
             element:<AllUsers></AllUsers>
+        },
+        {
+            path:'mycart',
+            element:<MyCart></MyCart>
+        },
+        {
+            path:'managebook',
+            element:<ManageBook></ManageBook>
+        },
+        {
+            path:'/dashboard/updatebook/:id',
+            element:<UpdateBook></UpdateBook>
         }
        ]
     },

@@ -16,25 +16,27 @@ import {
 } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import Admin from '../Hooks/Admin';
+import useCart from '../Hooks/useCart';
 
 const DashBoard = () => {
+  const [cart]= useCart();
     const [isAdmin] = Admin();
     return (
         <div className="drawer lg:drawer-open ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-row items-start justify-center">
+      <div className="drawer-content flex flex-row items-start justify-end">
         {/* Page content here */}
         <Outlet></Outlet>
         <label
           htmlFor="my-drawer-2"
-          className="btn btn-primary drawer-button lg:hidden"
+          className="btn btn-primary drawer-button mt-8 lg:hidden"
         >
           Open drawer
         </label>
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-        <ul className="menu bg-[#d6a255] p-4 w-80 min-h-full bg-base-200 text-base-content uppercase">
+        <ul className="menu bg-[#e2ae5f] p-4 w-80 min-h-full text-base-content uppercase">
           {/* Sidebar content here */}
           {isAdmin ? (
             <>
@@ -49,7 +51,7 @@ const DashBoard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="manageitem">
+                <NavLink to="managebook">
                  <FaAccusoft></FaAccusoft> Manage Item
                 </NavLink>
               </li>
@@ -85,7 +87,7 @@ const DashBoard = () => {
                 <NavLink to="mycart">
                   <FaShoppingCart></FaShoppingCart>My Cart
                   <span className="badge badge-secondary">
-                    {/* +{cart.length || 0} */}0
+                    +{cart.length || 0}
                   </span>
                 </NavLink>
               </li>
