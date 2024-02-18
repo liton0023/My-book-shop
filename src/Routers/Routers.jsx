@@ -1,8 +1,9 @@
-import React from 'react';
+
 import { createBrowserRouter } from 'react-router-dom';
 import Main from '../Layout/Main';
 import AllBooks from '../Pages/AllBooks/AllBooks';
 import AddBook from '../Pages/DashBoard/AddBook/AddBook';
+import AdminHome from '../Pages/DashBoard/AdminHome/AdminHome';
 import AllUsers from '../Pages/DashBoard/AllUsers/AllUsers';
 import DashBoard from '../Pages/DashBoard/DashBoard';
 import ManageBook from '../Pages/DashBoard/ManageBook/ManageBook';
@@ -63,6 +64,10 @@ export const router =createBrowserRouter([
         {
             path:'/dashboard/updatebook/:id',
             element:<UpdateBook></UpdateBook>
+        },
+        {
+            path:'adminhome',
+            element:<AdminHome></AdminHome>
         }
        ]
     },

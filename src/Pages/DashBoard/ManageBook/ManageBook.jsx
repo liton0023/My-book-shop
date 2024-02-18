@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -6,7 +6,7 @@ import Books from '../../Hooks/Books';
 import UseAxiosSource from '../../Hooks/UseAxiosSource';
 
 const ManageBook = () => {
-    const [book ,loading ,refetch] = Books();
+    const [book , ,refetch] = Books();
     const[axiosSecure]=UseAxiosSource();
     const navigate =useNavigate();
 

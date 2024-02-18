@@ -1,19 +1,19 @@
 import axios from 'axios';
-import React from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import UseAxiosSource from '../../Hooks/UseAxiosSource';
 
 
 const AddBook = () => {
-  const img_hosting_token = import.meta.env.VITE_IMAGE_UPLOAD_TOKEN;
-    // console.log(img_hosting_token)
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
     const { register, handleSubmit, reset } = useForm();
     const [axiosSecure]= UseAxiosSource();
-    const img_hostion_url=`https://api.imgbb.com/1/upload?key=${img_hosting_token}`
-
 
     const onSubmit = async (data) => {
+      console.log(data)
       const formData = new FormData();
       formData.append('image', data.image[0]);
   
@@ -32,12 +32,15 @@ const AddBook = () => {
         if(response.data.success){
                 const imgUrl = response.data.data.display_url;
                 console.log(imgUrl)
-                const{name ,price,category,wirter}=data;
+                const{name ,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer}=data;
                 const newBook ={
                   name,
-                  price:parseFloat(price),
+                  regularPrice:parseFloat(regularPrice),
                   category,
-                  wirter,
+                  writer,
+                  Book,Instoke,
+                  description,offer,
+                  discountPrice:parseFloat(discountPrice),stock,
                   imgUrl
                   }
                   axiosSecure.post('/books',newBook)
@@ -55,7 +58,7 @@ const AddBook = () => {
                         }
             
                       })
-                };
+                }
                 
         // Handle the response as needed, e.g., update UI with the uploaded image URL
       } catch (error) {
@@ -64,29 +67,64 @@ const AddBook = () => {
       }
     };
     return (
-        <div>
-             <div className="w-full">
-      <form onSubmit={handleSubmit(onSubmit)} className="mx-8">
-        <div className="form-control w-full mb-4">
-          <label className="label">
-            <span className="label-text font-semibold">Racipe Name*</span>
-          </label>
+
+
+      <main className='p-3 max-w-4xl mx-auto'>
+      <h1 className='text-3xl font-semibold text-center my-7'>
+        Create A Book Listing
+      </h1>
+      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col sm:flex-row gap-4'>
+        <div className='flex flex-col gap-4 flex-1'>
           <input
+            type='text'
+            placeholder='Name'
+            className='border p-3 rounded-lg'
+            id='name'
             {...register("name", { required: true, maxLength: 120 })}
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered w-full"
           />
-        </div>
-        <div className=" flex mb-8">
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text font-semibold">Category*</span>
+          <textarea
+            type='text'
+            placeholder='Description'
+            className='border p-3 rounded-lg'
+            id='description'
+            {...register("description", { required: true ,maxLength: 1200})}
+          />
+          <input
+            type='text'
+            placeholder='WRITER'
+            className='border p-3 rounded-lg'
+            required
+            {...register("writer", { required: true })}
+          />
+          <div className='flex gap-6 flex-wrap'>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='instock'
+                className='w-5'
+                {...register("Instoke", { required: true})}
+              />
+              <span>Stock</span>
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='rent'
+                className='w-5'
+                {...register("Book", { required: true })}
+              />
+              <span>Book</span>
+            </div>
+            <div className='flex gap-2'>
+            <div className="form-control w-full">
+           <label className="label">
+              <span>Category</span>
             </label>
-            <select
+          <select
               {...register("category", { required: true })}
               className="select select-bordered"
             >
+              {/* TO DO */}
               <option>Funny</option>
               <option>English</option>
               <option>Science</option>
@@ -94,46 +132,73 @@ const AddBook = () => {
               <option>Country</option>
             </select>
           </div>
-          <div className="form-control w-full mx-4">
-            <label className="label">
-              <span className="label-text font-semibold">Price*</span>
-            </label>
-            <input
-              type="number"
-              {...register("price", { required: true })}
-              placeholder="Type here"
-              className="input input-bordered w-full"
-            />
+            </div>
+            <div className='flex gap-2'>
+              <input
+                type='checkbox'
+                id='offer'
+                className='w-5'
+                {...register("offer")}
+              />
+              <span>Offer</span>
+            </div>
           </div>
-        </div>
-        <div className="form-control w-full">
+          <div className='flex flex-wrap gap-6'>
+            <div className='flex items-center gap-2'>
+              <input
+                type='number'
+                id='bathrooms'
+                className='p-3 border border-gray-300 rounded-lg'
+                {...register("stock", { required: true })}
+              />
+              <p>Stocks</p>
+            </div>
+            <div className='flex items-center gap-2'>
+              <input
+                type='number'
+                id='regularPrice'
+                className='p-3 border border-gray-300 rounded-lg'
+                {...register("regularPrice", { required: true})}
+              />
+              <div className='flex flex-col items-center'>
+                <p>Regular price</p>
+                  <span className='text-xs'>($ / month)</span>
+              </div>
+            </div>
+              <div className='flex items-center gap-2'>
+                <input
+                  type='number'
+                  id='discountPrice'
+                  className='p-3 border border-gray-300 rounded-lg'
+                  {...register("discountPrice", { required: true })}
+                />
+                <div className='flex flex-col items-center'>
+                  <p>Discounted price</p>
+                    <span className='text-xs'>($ / month)</span>
+                </div>
+              </div>
+          </div>
+          <div className="form-control w-full max-w-xs my-4">
           <label className="label">
-            <span className="label-text font-semibold">Racipe Deteails*</span>
-          </label>
-          <textarea
-            {...register("wirter", { required: true })}
-            className="textarea textarea-bordered h-48"
-            placeholder="Bio"
-          ></textarea>
-        </div>
-        <div className="form-control w-full max-w-xs my-4">
-          <label className="label">
-            <span className="label-text">Product Image</span>
-          </label>
+           <span className="label-text">Product Image</span>
+        </label>
           <input
             type="file"
             {...register("image", { required: true })}
             className="bg-[#D1A054] file-input file-input-bordered max-w-xs"
           />
         </div>
-        <input
-          className="btn btn-sm bg-[#D1A054]"
-          type="submit"
-          value="Add Book"
-        />
-      </form>
-    </div>
+          <button
+            disabled={loading || uploading}
+            className='p-3 bg-slate-700 text-white rounded-lg w-1/2 mx-auto uppercase hover:opacity-95 disabled:opacity-80'
+          >
+            {loading ? 'Creating...' : 'Create listing'}
+          </button>
+          {error && <p className='text-red-700 text-sm'>{error}</p>}
         </div>
+         
+      </form>
+    </main>
     );
 };
 

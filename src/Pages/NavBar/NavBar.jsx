@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../Provider/AuthProvider/AuthProvider';
@@ -18,7 +18,7 @@ const [cart] =useCart();
 const navOptions=<> 
 <li><Link to='/'>HOME</Link></li>
 <li><Link to='/books'>BOOKS</Link></li>
-<li><Link to='/order'>ORDER</Link></li>
+<li><Link to='/mycart'>ORDER</Link></li>
 <li>
  <Link to='/dashboard'>
  <button className="flex gap-2">
@@ -40,7 +40,7 @@ user?
 </>
     return (
       <>
-      <div className="navbar fixed z-10 bg-opacity-30 max-w-screen-xl top-0 bg-black text-white">
+      <div className="navbar sticky w-full z-10 bg-opacity-30 max-w-screen-xl top-0 bg-black text-white">
 <div className="navbar-start">
 <div className="dropdown">
 <label  tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -50,7 +50,7 @@ user?
  {navOptions}
 </ul>
 </div>
-<a className="btn btn-ghost normal-case text-xl">BISTRO BOSS</a>
+<a className="btn btn-ghost normal-case text-xl">BOOK SHOP</a>
 </div>
 <div className="navbar-center hidden lg:flex">
 <ul className="menu menu-horizontal text-xl gap-10 px-1">

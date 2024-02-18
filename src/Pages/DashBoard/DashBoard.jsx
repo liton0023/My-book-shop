@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 import {
   FaAccusoft,
@@ -24,7 +24,7 @@ const DashBoard = () => {
     return (
         <div className="drawer lg:drawer-open ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-row items-start justify-end">
+      <div className="drawer-content flex flex-row items-start justify-center">
         {/* Page content here */}
         <Outlet></Outlet>
         <label
@@ -111,12 +111,12 @@ const DashBoard = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/menu">
+            <NavLink to="/">
               <FaBars></FaBars>Menu
             </NavLink>
           </li>
           <li>
-            <NavLink to="/order">
+            <NavLink to="/mycart">
               <FaShoppingBag></FaShoppingBag>Shop
             </NavLink>
           </li>
