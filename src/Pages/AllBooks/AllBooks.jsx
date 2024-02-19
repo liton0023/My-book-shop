@@ -1,8 +1,8 @@
-import React from 'react';
+
 import Card from '../Card/Card';
 import Books from '../Hooks/Books';
 const AllBooks = () => {
-    const [book,loading]=Books();
+    const [book,]=Books();
 
     // console.log(book)
     return (

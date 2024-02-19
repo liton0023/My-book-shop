@@ -40,7 +40,7 @@ user?
 </>
     return (
       <>
-      <div className="navbar sticky w-full z-10 bg-opacity-30 max-w-screen-xl top-0 bg-black text-white">
+      <div className="navbar fixed mx-auto  z-10 bg-opacity-30 max-w-screen-2xl top-0 bg-black text-white">
 <div className="navbar-start">
 <div className="dropdown">
 <label  tabIndex={0} className="btn btn-ghost lg:hidden">

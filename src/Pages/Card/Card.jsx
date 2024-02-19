@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
+import { MdLocationOn } from 'react-icons/md';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../Provider/AuthProvider/AuthProvider';
@@ -10,12 +11,13 @@ const Card = ({item}) => {
  const {user}= useContext(AuthContext);
  const[,refetch] = useCart();
   // console.log(item.name);
-  const {_id,name,imgUrl,price,category,wirter}=item;
+ 
 
   const handleAddToCart =(item)=>{
+    const {_id,name ,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer}=item;
     console.log(item)
     if(user && user.email){
-      const orderItem ={menuItemId :_id,name:name,category,imgUrl,price, email: user.email};
+      const orderItem ={menuItemId : _id,name:name,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer, email: user.email}
       fetch('http://localhost:5000/carts',{
         method: 'POST',
         headers:{
@@ -57,19 +59,50 @@ const Card = ({item}) => {
   }
 
     return (
-      <div>
-      <div className="card w-96 my-4 mx-auto h-[541px] bg-base-100 shadow-xl">
-        <figure>
-          <img src={imgUrl} alt="" className="rounded-xl" />
-        </figure>
-        <p className="absolute right-0 mr-4 mt-4 w-1/6 px-4 bg-slate-900 text-white">
-          ${price}
-        </p>
-        <div className="card-body items-center text-center">
-          <h2 className="card-title">{name}</h2>
-          <p>{wirter}</p>
+
+      <div className='bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]'>
+      {/* <Link to={`/books/${item._id}`}> */}
+        <img
+          src={
+            item.imgUrl ||
+            'https://53.fs1.hubspotusercontent-na1.net/hub/53/hubfs/Sales_Blog/real-estate-business-compressor.jpg?width=595&height=400&name=real-estate-business-compressor.jpg'
+          }
+          alt='listing cover'
+          className='h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300'
+        />
+        <div className='p-3 flex flex-col gap-2 w-full'>
+          <p className='truncate text-lg font-semibold text-slate-700'>
+            {item.name}
+          </p>
+          <div className='flex items-center gap-1'>
+            <MdLocationOn className='h-4 w-4 text-green-700' />
+            <p className='text-sm text-gray-600 truncate w-full'>
+              {item.writer}
+            </p>
+          </div>
+          <p className='text-sm text-gray-600 line-clamp-2'>
+            {item.description}
+          </p>
+          <p className='text-slate-500 mt-2 font-semibold '>
+            $
+            {item.offer
+              ? item.discountPrice
+              : item.regularPrice}
+          </p>
+          <div className='text-slate-700 flex gap-4'>
+            <div className='font-bold text-xs'>
+              {item.stock> 1
+                ? `${item.stock} books `
+                : `${item.stock} book`}
+            </div>
+            <div className='font-bold text-xs'>
+              {item.stock > 1
+                ? `${item.stock} books `
+                : `${item.stock} book `}
+            </div>
+          </div>
           <div className="card-actions">
-            <button
+          <button
               onClick={() => handleAddToCart(item)}
               className="btn btn-outline uppercase border-0 border-b-4 mt-4"
             >
@@ -77,8 +110,32 @@ const Card = ({item}) => {
             </button>
           </div>
         </div>
-      </div>
+      {/* </Link> */}
     </div>
+
+
+    //   <div>
+    //   <div className="card w-96 my-4 mx-auto h-[541px] bg-base-100 shadow-xl">
+    //     <figure>
+    //       <img src={imgUrl} alt="" className="rounded-xl" />
+    //     </figure>
+    //     <p className="absolute right-0 mr-4 mt-4 w-1/6 px-4 bg-slate-900 text-white">
+    //       ${price}
+    //     </p>
+    //     <div className="card-body items-center text-center">
+    //       <h2 className="card-title">{name}</h2>
+    //       <p>{wirter}</p>
+    //       <div className="card-actions">
+    //         <button
+    //           onClick={() => handleAddToCart(item)}
+    //           className="btn btn-outline uppercase border-0 border-b-4 mt-4"
+    //         >
+    //           ADD TO CART
+    //         </button>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
     );
 };
 
