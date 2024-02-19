@@ -1,9 +1,9 @@
-import React from 'react';
+
 import { Outlet } from 'react-router-dom';
 import Footer from '../Layout/Footer';
 import NavBar from '../Pages/NavBar/NavBar';
 
-const Main = () => {;
+const Main = () => {
     return (
         <div>
           <NavBar></NavBar>

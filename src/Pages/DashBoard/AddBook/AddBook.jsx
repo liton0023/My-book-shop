@@ -326,24 +326,6 @@ const AddBook = () => {
           </button>
           {error && <p className='text-red-700 text-sm'>{error}</p>}
         </div>
-          {/* <div className="form-control w-full max-w-xs my-4">
-          <label className="label">
-           <span className="label-text">Product Image</span>
-        </label>
-          <input
-            type="file"
-            multiple
-            {...register("image", { required: true })}
-            className="bg-[#D1A054] file-input file-input-bordered max-w-xs"
-          />
-        </div>
-          <button
-            disabled={loading || uploading}
-            className='p-3 bg-slate-700 text-white rounded-lg w-1/2 mx-auto uppercase hover:opacity-95 disabled:opacity-80'
-          >
-            {loading ? 'Creating...' : 'Create listing'}
-          </button>
-          {error && <p className='text-red-700 text-sm'>{error}</p>} */}
         </div> 
       </form>
     </main>
