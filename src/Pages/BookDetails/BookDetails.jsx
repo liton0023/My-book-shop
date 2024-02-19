@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { default as SwiperCore } from "swiper";
+import SwiperCore from 'swiper';
+import 'swiper/css/bundle';
 import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const BookDetails = () => {
 
@@ -27,7 +29,12 @@ const BookDetails = () => {
                 return;
               }
 
-              console.log(data);
+            //   console.log(data);
+
+            setBookDetails(data);
+            setLoading(false);
+            setError(false);
+
 
             }catch(err){
                 setError(err)
@@ -44,13 +51,27 @@ const BookDetails = () => {
         {error &&(
          <p className="text-ceter my-7 text-2xl">Something went wrong!!</p>
         )}
-{/* 
-        <div>
-            <Swiper>
+{bookDetails && !loading && !error && (
+    <div>
+            <Swiper navigation >
+                {bookDetails.imgUrl.map((url)=>(
+                    <SwiperSlide key={url}>
+                        <div
+                        className="h-[550px]"
+                        style={{
+                            background:`url(${url}) center no-repeat`,
+                            backgroundSize:' cover',
+                        }}
+                        >
+                        </div>
 
+                    </SwiperSlide>
+                ))}
             </Swiper>
 
-        </div> */}
+        </div>
+)}
+        
        </main>
     );
 };
