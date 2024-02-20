@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { MdLocationOn } from 'react-icons/md';
+import { FaBookOpen } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../Provider/AuthProvider/AuthProvider';
@@ -10,7 +10,7 @@ const Card = ({item}) => {
  const location = useLocation();
  const {user}= useContext(AuthContext);
  const[,refetch] = useCart();
-  // console.log(item.name);
+  // console.log(item._id);
  
 
   const handleAddToCart =(item)=>{
@@ -75,7 +75,7 @@ const Card = ({item}) => {
             {item.name}
           </p>
           <div className='flex items-center gap-1'>
-            <MdLocationOn className='h-4 w-4 text-green-700' />
+            <FaBookOpen className='h-4 w-4 text-green-700' />
             <p className='text-sm text-gray-600 truncate w-full'>
               {item.writer}
             </p>

@@ -17,7 +17,7 @@ const [cart] =useCart();
 }
 const navOptions=<> 
 <li><Link to='/'>HOME</Link></li>
-<li><Link to='/books'>BOOKS</Link></li>
+<li><Link to='/'>BOOKS</Link></li>
 <li><Link to='/mycart'>ORDER</Link></li>
 <li>
  <Link to='/dashboard'>
