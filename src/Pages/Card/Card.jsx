@@ -84,7 +84,7 @@ const Card = ({item}) => {
             {item.description}
           </p>
           <p className='text-slate-500 mt-2 font-semibold '>
-            $
+         Price : $
             {item.offer
               ? item.discountPrice
               : item.regularPrice}

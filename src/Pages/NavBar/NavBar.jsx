@@ -50,7 +50,7 @@ user?
  {navOptions}
 </ul>
 </div>
-<a className="btn btn-ghost normal-case text-xl">BOOK SHOP</a>
+<Link to='/' className="btn btn-ghost normal-case text-xl">BOOK SHOP</Link>
 </div>
 <div className="navbar-center hidden lg:flex">
 <ul className="menu menu-horizontal text-xl gap-10 px-1">

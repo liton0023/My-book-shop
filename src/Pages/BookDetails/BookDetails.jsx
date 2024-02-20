@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaBook, FaBookOpen, FaShare } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { AuthContext } from "../../../Provider/AuthProvider/AuthProvider";
+import useCart from "../Hooks/useCart";
 
 const BookDetails = () => {
 
@@ -13,7 +16,12 @@ const BookDetails = () => {
     const [loading,setLoading]=useState(false);
     const [error,setError]= useState(false);
     const [copied, setCopied] = useState(false);
-    const [contact, setContact] = useState(false);
+
+    const navigate =useNavigate();
+    const location = useLocation();
+
+    const {user}=useContext(AuthContext);
+    const[,refetch] = useCart();
 
     const params = useParams();
 
@@ -43,7 +51,53 @@ const BookDetails = () => {
             }
         }
         fetchBook();
-    },[params.id])
+    },[params.id]);
+
+
+    const handleAddToCart =(item)=>{
+        const {_id,name ,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer}=item;
+        console.log(item)
+        if(user && user.email){
+          const orderItem ={menuItemId : _id,name:name,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer, email: user.email}
+          fetch('http://localhost:5000/carts',{
+            method: 'POST',
+            headers:{
+              "content-type":"application/json"
+            },
+            body: JSON.stringify(orderItem)
+          })
+          .then((res)=> res.json())
+          .then((data)=>{
+            // console.log(data);
+            if(data.insertedId){
+              refetch();
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Book Added Successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+    
+            }
+          })
+        }
+        else {
+          Swal.fire({
+            title: "Pleace Login?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Log In",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate("/login", { state: { from: location } });
+            }
+          });
+        }
+      }
 
 
     return (
@@ -98,11 +152,11 @@ const BookDetails = () => {
               </p>
               <div className='flex gap-4'>
                 <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                Price : ${bookDetails.regularPrice}
+               Regular Price : ${bookDetails.regularPrice}
                 </p>
                 {bookDetails.offer && (
                   <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                  Offer : ${+bookDetails.regularPrice - +bookDetails.discountPrice}% OFF
+                  Discount : ${+bookDetails.regularPrice - +bookDetails.discountPrice} OFF
                   </p>
                 )}
               </div>
@@ -132,6 +186,14 @@ const BookDetails = () => {
                   {bookDetails.category}
                 </li>
               </ul>
+              <div className="card-actions">
+          <button
+              onClick={() => handleAddToCart(bookDetails)}
+              className="btn btn-outline uppercase border-0 border-b-4 mt-4"
+            >
+              ADD TO CART
+            </button>
+          </div>
             </div>
           </div>
         )}
