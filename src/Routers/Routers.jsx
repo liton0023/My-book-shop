@@ -11,6 +11,7 @@ import ManageBook from '../Pages/DashBoard/ManageBook/ManageBook';
 import UpdateBook from '../Pages/DashBoard/ManageBook/UpdateBook';
 import Home from '../Pages/Home/Home';
 import LogIn from '../Pages/LogIn/LogIn';
+import Profile from '../Pages/Profile/Profile';
 import SingUp from '../Pages/SingUp/SingUp';
 import MyCart from '../Pages/UserDashbord/MyCart';
 import PrivetRoutes from './PrivetRoutes';
@@ -39,6 +40,10 @@ export const router =createBrowserRouter([
         {
             path:'/books/:id',
             element:<BookDetails></BookDetails>
+        },
+        {
+            path:'/users/:email',
+            element:<Profile></Profile>
         }
 
         ],

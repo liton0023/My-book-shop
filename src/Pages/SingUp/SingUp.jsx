@@ -1,30 +1,68 @@
-import React, { useContext } from 'react';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from '@firebase/storage';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { AuthContext } from '../../../Provider/AuthProvider/AuthProvider';
+import { app } from '../../../firebase.config';
 import SocialLogin from '../LogIn/SocialLogin/SocialLogin';
 
 const SingUp = () => {
-
+  const fileRef = useRef(null);
+  const [file, setFile] = useState(undefined);
+  const [filePerc, setFilePerc] = useState(0);
+  const [fileUploadError, setFileUploadError] = useState(false);
+  const [formData, setFormData] = useState({});
     const navigate = useNavigate();
     const {
       register,
       handleSubmit,
       reset,
-      watch,
       formState: { errors },
     } = useForm();
     const { createUser, updateUser } = useContext(AuthContext);
 
+    useEffect(() => {
+      if (file) {
+        handleFileUpload(file);
+      }
+    }, [file]);
+
+    const handleFileUpload = (file) => {
+      const storage = getStorage(app);
+      const fileName = new Date().getTime() + file.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+  
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setFilePerc(Math.round(progress));
+        },
+        (error) => {
+          setFileUploadError(true,error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+            setFormData({ ...formData, profilePhoto: downloadURL })
+          );
+        }
+      );
+    };
+  
+    // console.log(formData.profilePhoto)
+
     const onSubmit =data=>{
-        console.log(data);
+        // console.log(data);
         createUser(data.email, data.password)
         .then((result)=>{
             const loggedUser =result.user;
-            // console.log(loggedUser)
-            updateUser(data.name , data.photo)
+            console.log(loggedUser)
+            updateUser(data.name ,formData.photoURL)
             .then(()=>{
-                const saveUser= {name: data.name ,email: data.email}
+                const saveUser= {name: data.name ,email: data.email,photoURL:formData.profilePhoto,gender:data.gender,age:data.age}
                 fetch('http://localhost:5000/users',{
                     method:"POST",
                     headers:{
@@ -34,11 +72,16 @@ const SingUp = () => {
                 })
                 .then((res)=>res.json())
                 .then((data)=>{
-                    reset();
-
-                    console.log('user profile info updated')
+                    console.log('user profile info updated',data);
                     if(data.insertedId){
-                        alert('user added successfully')
+                      reset();
+                      Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "User  added successfully",
+                        showConfirmButton: false,
+                        timer: 1500,
+                      });
                     }
                 })
                 navigate('/')
@@ -82,26 +125,31 @@ const SingUp = () => {
                   <span className="text-red-600">Name field is required</span>
                 )}
               </div>
+
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Photo Url</span>
                 </label>
+             
                 <input
-                  type="text"
-                  {...register(
-                    "photo",
-                    { required: true },
-                    { pattern: /^[A-Za-z]+$/i }
-                  )}
-                  name="photo"
-                  placeholder="Photo Url"
-                  className="input input-bordered"
-                />
-                {errors.photo && (
-                  <span className="text-red-600">
-                    Photo Url field is required
-                  </span>
-                )}
+          onChange={(e) => setFile(e.target.files[0])}
+          type='file'
+          ref={fileRef}
+          accept='image/*'
+        />
+        <p className='text-sm self-center'>
+          {fileUploadError ? (
+            <span className='text-red-700'>
+              Error Image upload (image must be less than 2 mb)
+            </span>
+          ) : filePerc > 0 && filePerc < 100 ? (
+            <span className='text-slate-700'>{`Uploading ${filePerc}%`}</span>
+          ) : filePerc === 100 ? (
+            <span className='text-green-700'>Image successfully uploaded!</span>
+          ) : (
+            ''
+          )}</p>
+              
               </div>
               <div className="form-control">
                 <label className="label">

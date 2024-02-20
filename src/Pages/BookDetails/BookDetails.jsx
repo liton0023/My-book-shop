@@ -28,7 +28,6 @@ const BookDetails = () => {
     useEffect(()=>{
         const fetchBook=async()=>{
             try{
-
             setLoading(true);
             const res = await fetch(`http://localhost:5000/books/${params.id}`)
             const data = await res.json();
@@ -37,9 +36,7 @@ const BookDetails = () => {
                 setLoading(false);
                 return;
               }
-
-              console.log(data);
-
+            // console.log(data);
             setBookDetails(data);
             setLoading(false);
             setError(false);

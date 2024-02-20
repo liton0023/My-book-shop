@@ -57,6 +57,7 @@ user?
 {navOptions}
 </ul>
 </div>
+<Link to={`users/${user?.email}`}>
 <div className="navbar-end">
 <div className="flex-none">
      <div className="dropdown dropdown-end">
@@ -68,6 +69,7 @@ user?
      </div>
    </div>
 </div>
+</Link>
 </div>
   </>
 
