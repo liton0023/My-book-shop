@@ -57,7 +57,7 @@ const Profile = () => {
           try {
             setLoading(true);
             const res = await axiosSecure(`users/${params.email}`);
-            const data = await res.json();
+            const data = await res.data;
             if (data.success === false) {
               setError(true);
               setLoading(false);
@@ -74,6 +74,10 @@ const Profile = () => {
         };
         fetchUser();
       }, [params.email]);
+
+      const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+      };
 
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -99,8 +103,19 @@ const Profile = () => {
         }
       };
 
-      
+      const handleDeleteUser=()=>{
 
+      }
+
+      const handleSignOut =()=>{
+        logOut()
+        .then(()=>{ })
+        .catch(error=>console.log(error))
+        navigate('/login')
+      }
+      
+// console.log(user)
+console.log(currentUser)
     return (
         <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -114,7 +129,7 @@ const Profile = () => {
         />
         <img
           onClick={() => fileRef.current.click()}
-          src={user.PhotoURL || currentUser.photoURL}
+          src={user?.photoURL || currentUser?.photoURL}
           alt='profile'
           className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
         />
@@ -134,7 +149,7 @@ const Profile = () => {
         <input
           type='text'
           placeholder='username'
-          defaultValue={currentUser.name}
+          defaultValue={currentUser?.name}
           id='username'
           className='border p-3 rounded-lg'
           onChange={handleChange}
@@ -143,15 +158,24 @@ const Profile = () => {
           type='email'
           placeholder='email'
           id='email'
-          defaultValue={currentUser.email}
+          defaultValue={currentUser?.email}
           className='border p-3 rounded-lg'
           onChange={handleChange}
         />
         <input
-          type='password'
-          placeholder='password'
+          type='text'
+          placeholder='Gender'
           onChange={handleChange}
-          id='password'
+          id='gender'
+          defaultValue={currentUser?.gender}
+          className='border p-3 rounded-lg'
+        />
+        <input
+          type='numder'
+          placeholder='Age'
+          onChange={handleChange}
+          id='gender'
+          defaultValue={currentUser?.age}
           className='border p-3 rounded-lg'
         />
         <button
@@ -170,7 +194,8 @@ const Profile = () => {
         </span>
         <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>
           Sign out
-        </span>
+        </span><> 
+</>
       </div>
 
       <p className='text-red-700 mt-5'>{error ? error : ''}</p>

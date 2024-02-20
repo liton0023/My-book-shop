@@ -9,13 +9,22 @@ const Card = ({item}) => {
  const navigate =useNavigate();
  const location = useLocation();
  const {user}= useContext(AuthContext);
- const[,refetch] = useCart();
+ const[cart,refetch] = useCart();
   // console.log(item._id);
  
 
   const handleAddToCart =(item)=>{
     const {_id,name ,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer}=item;
-    console.log(item)
+
+    // TODO Cart Quentity
+
+    // cart.map((book)=>{
+    //   if(book._id===_id){
+    //     const quentity= book?.quentity ||0 +1;
+    //   }
+    // })
+
+    // console.log(item)
     if(user && user.email){
       const orderItem ={menuItemId : _id,name:name,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer, email: user.email}
       fetch('http://localhost:5000/carts',{

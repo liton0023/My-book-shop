@@ -97,7 +97,7 @@ const ManageBook = () => {
                   </div>
                 </td>
                 <td>{item.category}</td>
-                <td className="text-right">${item.regularPrice}</td>
+                <td className="text-start">${item.regularPrice}</td>
                 <td>
                   <Link to={`/dashboard/updatebook/${item?._id}`}>  {" "}
                     <button onClick={handleUpdate} className="btn btn-ghost bg-orange-600  text-white btn-xs">

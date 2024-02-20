@@ -8,7 +8,9 @@ import useCart from '../Hooks/useCart';
 const MyCart = () => {
     const[cart,refetch] =useCart();
     // console.log(cart);
-     const totals =cart.reduce((sum,item)=> item.price +sum,0);
+     const totals =cart.reduce((sum,item)=> (item.offer
+      ? item.discountPrice
+      : item.regularPrice) +sum,0);
      const total = Math.round(totals);
 
      const handleDelete=(item)=>{
@@ -76,14 +78,17 @@ const MyCart = () => {
                   <div className="avatar">
                     <div className="mask mask-squircle w-12 h-12">
                       <img
-                        src={item.imgUrl}
+                        src={item.imgUrl ||
+                          'https://53.fs1.hubspotusercontent-na1.net/hub/53/hubfs/Sales_Blog/real-estate-business-compressor.jpg?width=595&height=400&name=real-estate-business-compressor.jpg'}
                         alt="Avatar Tailwind CSS Component"
                       />
                     </div>
                   </div>
                 </td>
                 <td>{item.name}</td>
-                <td className="text-end">$ {item.price}</td>
+                <td className="text-start">${item.offer
+              ? item.discountPrice
+              : item.regularPrice}</td>
                 <td>
                   <button onClick={()=>handleDelete(item)} className="btn btn-ghost btn-sm text-white bg-red-600"><FaTrash></FaTrash></button>
                 </td>

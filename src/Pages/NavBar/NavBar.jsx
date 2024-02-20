@@ -4,17 +4,10 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../Provider/AuthProvider/AuthProvider';
 import useCart from '../Hooks/useCart';
 const NavBar = () => {
-const {user,logOut}=useContext(AuthContext);
+const {user}=useContext(AuthContext);
 // console.log(user)
 const [cart] =useCart();
 
-
-  const handleLogOut=()=>{
-    logOut()
-    .then(()=>{ })
-    .catch(error=>console.log(error))
-
-}
 const navOptions=<> 
 <li><Link to='/'>HOME</Link></li>
 <li><Link to='/'>BOOKS</Link></li>
@@ -27,16 +20,6 @@ const navOptions=<>
 </button>
  </Link>
 </li>
-
-{
-user?
-<> 
-<span>{user?.displayName}</span>
-<button onClick={handleLogOut} className="btn text-xl btn-ghost">LOGOUT</button> </>:
-<> <li><Link to='/login'>LOGIN</Link></li>
-</>
-}
-
 </>
     return (
       <>
@@ -58,7 +41,17 @@ user?
 </ul>
 </div>
 <Link to={`users/${user?.email}`}>
-<div className="navbar-end">
+{user ? (
+              <img
+                className='rounded-full h-7 w-7 object-cover'
+                src={user.photoURL}
+                alt='profile'
+              />
+            ) : (
+              <Link className='btn btn-ghost normal-case text-xl' to='login'> Sign in</Link>
+            )}
+
+{/* <div className="navbar-end">
 <div className="flex-none">
      <div className="dropdown dropdown-end">
        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -68,7 +61,7 @@ user?
        </div>
      </div>
    </div>
-</div>
+</div> */}
 </Link>
 </div>
   </>
