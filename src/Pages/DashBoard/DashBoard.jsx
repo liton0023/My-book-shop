@@ -52,12 +52,12 @@ const DashBoard = () => {
               </li>
               <li>
                 <NavLink to="managebook">
-                 <FaAccusoft></FaAccusoft> Manage Item
+                 <FaAccusoft></FaAccusoft> Manage Book
                 </NavLink>
               </li>
               <li>
-                <NavLink to="booking">
-                 <FaBook></FaBook> Manage Booking
+                <NavLink to="homeSlider">
+                 <FaBook></FaBook> Add Home Slider
                 </NavLink>
               </li>
               <li>

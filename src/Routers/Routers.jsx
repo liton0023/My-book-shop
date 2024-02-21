@@ -7,6 +7,7 @@ import AddBook from '../Pages/DashBoard/AddBook/AddBook';
 import AdminHome from '../Pages/DashBoard/AdminHome/AdminHome';
 import AllUsers from '../Pages/DashBoard/AllUsers/AllUsers';
 import DashBoard from '../Pages/DashBoard/DashBoard';
+import HomeSlider from '../Pages/DashBoard/HomeSilder/HomeSlider';
 import ManageBook from '../Pages/DashBoard/ManageBook/ManageBook';
 import UpdateBook from '../Pages/DashBoard/ManageBook/UpdateBook';
 import Home from '../Pages/Home/Home';
@@ -79,6 +80,10 @@ export const router =createBrowserRouter([
         {
             path:'adminhome',
             element:<AdminHome></AdminHome>
+        },
+        {
+        path:'homeSlider',
+        element:<HomeSlider></HomeSlider>
         }
        ]
     },
