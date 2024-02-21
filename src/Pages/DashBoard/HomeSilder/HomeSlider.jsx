@@ -89,7 +89,7 @@ const HomeSlider = () => {
           }
           const imgUrl=formData.imageUrls;
 
-          await axiosSecure.post('/homeSlider',imgUrl)
+          await axiosSecure.post('/sliderimg',imgUrl)
           .then((data)=>{
             if(data.data.insertedId){
                 Swal.fire({

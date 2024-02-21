@@ -1,11 +1,12 @@
 
 import AllBooks from '../AllBooks/AllBooks';
-import Search from '../Search/Search';
+import Slider from '../HomeSlider/Slider';
 
 const Home = () => {
     return (
         <div className='mt-20 p-10'>
-            <Search></Search>
+            {/* <Search></Search> */}
+            <Slider></Slider>
            <AllBooks></AllBooks>
         </div>
     );

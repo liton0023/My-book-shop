@@ -45,7 +45,7 @@ export const router =createBrowserRouter([
         {
             path:'/users/:email',
             element:<Profile></Profile>
-        }
+        },
 
         ],
     },
