@@ -1,6 +1,8 @@
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
-import { Navigation } from 'swiper/modules';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
 import Books from "../Hooks/Books";
 
@@ -11,7 +13,18 @@ const Slider = () => {
     return (
         <div>
                   {/* swiper */}
-      <Swiper navigation>
+      <Swiper  spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
+        navigation={true}
+        modules={[Autoplay, Pagination, Navigation]}
+       >
         {book &&
           book.length > 0 &&
           book.map((listing) => (

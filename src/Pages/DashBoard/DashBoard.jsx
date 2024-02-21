@@ -1,7 +1,6 @@
 
 
 import {
-  FaAccusoft,
   FaBahai,
   FaBars,
   FaBook,
@@ -11,8 +10,7 @@ import {
   FaShoppingBag,
   FaShoppingCart,
   FaUser,
-  FaUtensils,
-  FaWallet,
+  FaWallet
 } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import Admin from '../Hooks/Admin';
@@ -47,12 +45,12 @@ const DashBoard = () => {
               </li>
               <li>
                 <NavLink to="addbook">
-                  <FaUtensils></FaUtensils> Add Items
+                  <FaBook></FaBook> Add Book
                 </NavLink>
               </li>
               <li>
                 <NavLink to="managebook">
-                 <FaAccusoft></FaAccusoft> Manage Book
+                 <FaBook></FaBook> Manage Book
                 </NavLink>
               </li>
               <li>
