@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { FaBook, FaBookOpen, FaShare } from "react-icons/fa";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -18,14 +20,45 @@ const BookDetails = () => {
     const [loading,setLoading]=useState(false);
     const [error,setError]= useState(false);
     const [copied, setCopied] = useState(false);
+    const[comments,setComments] = useState(null);
+    const[currentUser,setCurrentUser] = useState(null);
 
     const navigate =useNavigate();
     const location = useLocation();
-
     const {user}=useContext(AuthContext);
     const[,refetch] = useCart();
-
     const params = useParams();
+
+    const { register, handleSubmit, reset } = useForm();
+
+    // get all users 
+
+    useEffect(()=>{
+      try{
+        setLoading(true)
+        fetch('http://localhost:5000/users')
+        .then((res)=> res.json())
+        .then((data)=> {
+         const userData= data;
+         userData.forEach((users)=>{
+          // console.log(user);
+    
+          if(user?.email === users?.email){
+            setCurrentUser(users);
+            setLoading(false);
+          }  
+         })
+        })
+      }
+      catch(err){
+        console.log(err)
+      }
+    },[])
+ 
+
+
+
+   
 
     useEffect(()=>{
         const fetchBook=async()=>{
@@ -52,15 +85,86 @@ const BookDetails = () => {
         fetchBook();
     },[params.id]);
 
-    // console.log(bookDetails.imgUrl)
-    // bookDetails.imgUrl.map((url)=>{
-    //   console.log(url)
-    // })
+
+
+    const onSubmit =(data)=>{
+      console.log(data)
+      // const{_id}=bookDetails;
+      if(user && user.email){
+        const comment = {bookId:params.id,userId:currentUser?._id,userName:currentUser?.name,photoURL:currentUser?.photoURL,comment:data?.comment};
+
+        try {
+          setLoading(true)
+          axios.post('http://localhost:5000/comment', comment)
+            .then((response) => {
+              console.log(response.data);
+              if (response.data.insertedId) {
+                alert('Comment Added Successfully');
+              }
+              setLoading(false)
+              reset();
+            })
+            .catch((error) => {
+              console.error('Error adding comment:', error);
+            });
+        } catch (error) {
+          console.error('Error:', error);
+        }
+
+        // axios.post('http://localhost:5000/comment',comment )
+        // .then((data)=>{
+        //   console.log(data);
+        //   if(data.insertedId){
+        //     alert('Comment Added Successfully');
+           
+        //   }
+        //   reset();
+        // })
+
+      }
+      else {
+        Swal.fire({
+          title: "Pleace Login?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Log In",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login", { state: { from: location } });
+          }
+        });
+      }
+     
+    }
+
+    // get comment
+
+    useEffect(()=>{
+      fetch('http://localhost:5000/comment')
+      .then((res)=> {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data)=>{
+        console.log(data)
+        setComments(data);
+       
+      })
+    },[])
+
+  
+    // console.log(comments)
+
 
 
     const handleAddToCart =(item)=>{
         const {_id,name ,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer,imgUrl}=item;
-        console.log(item)
+        // console.log(item)
         if(user && user.email){
           const orderItem ={menuItemId : _id,name:name,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer, email: user.email,imgUrl}
           fetch('http://localhost:5000/carts',{
@@ -209,36 +313,29 @@ const BookDetails = () => {
               ADD TO CART
             </button>
           </div>
-       <form action="">
-       <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+       <input
+            type='text'
+            placeholder='Add Your Comment'
+            className='border p-3 rounded-lg'
+            id='name'
+            {...register("comment", { required: true})}
+          />
      <div>
      <button
-              // onClick={() => handleAddToCart(bookDetails)}
               className="btn btn-outline uppercase border-0 border-b-4 mt-4"
             >
-              Comment
+          comment
             </button>
      </div>
        </form>
-          <div className="chat chat-start">
-  <div className="chat-image avatar">
-    <div className="w-10 rounded-full">
-      <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-    </div>
-  </div>
-  <div className="chat-header">
-    Obi-Wan Kenobi
-    <time className="text-xs opacity-50">12:45</time>
-  </div>
-  <div className="chat-bubble">You were the Chosen One!</div>
-  <div className="chat-footer opacity-50">
-    Delivered
-  </div>
-</div>
-
-            </div>
+    {/* { 
+      comments?.filter((comment)=><Comment key={comment._id} id={bookDetails._id} comment={comment}></Comment>)
+    } */}
           </div>
         )}
+ 
       </main>
     );
 };
