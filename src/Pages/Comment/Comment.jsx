@@ -1,21 +1,13 @@
+import { useContext } from "react";
+import { AuthContext } from "../../../Provider/AuthProvider/AuthProvider";
 
-import { useEffect, useState } from "react";
 
-const Comment = (props) => {
-    const [bookComment, setBookComment] = useState([]);
-    const [Loading,setLoading]=useState(false)
-    const { id, comment } = props;
-   
-    useEffect(() => {
-        setLoading(true)
-       if (comment && comment.comment.bookId === id) {
-        console.log(comment);
-        setBookComment(comment);
-        setLoading(false)
-       }
-    }, []);
+const Comment = ({comment}) => {
+  
+   const{user} = useContext(AuthContext);
+//    console.log(user)
 
-    if (!bookComment) {
+    if (!comment) {
         
         return <div>Loading...</div>;
     }
@@ -25,13 +17,13 @@ const Comment = (props) => {
             <div className="chat chat-start">
                 <div className="chat-image avatar">
                     <div className="w-10 rounded-full">
-                        <img alt="User avatar" src={bookComment?.comment?.photoURL} />
+                        <img alt="User avatar" src={comment?.comment?.photoURL || user?.photoURL} />
                     </div>
                 </div>
                 <div className="chat-header">
-                    <h1>{bookComment?.comment?.userName}</h1>
+                    <h1>{comment?.comment?.userName}</h1>
                 </div>
-                <div className="chat-bubble">{bookComment?.comment?.comment}</div>
+                <div className="chat-bubble">{comment?.comment?.comment}</div>
             </div>
         </div>
     );

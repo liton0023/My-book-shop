@@ -11,6 +11,7 @@ import 'swiper/css/pagination';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { AuthContext } from "../../../Provider/AuthProvider/AuthProvider";
+import Comment from "../Comment/Comment";
 import useCart from "../Hooks/useCart";
 
 const BookDetails = () => {
@@ -85,8 +86,6 @@ const BookDetails = () => {
         fetchBook();
     },[params.id]);
 
-
-
     const onSubmit =(data)=>{
       console.log(data)
       // const{_id}=bookDetails;
@@ -110,16 +109,6 @@ const BookDetails = () => {
         } catch (error) {
           console.error('Error:', error);
         }
-
-        // axios.post('http://localhost:5000/comment',comment )
-        // .then((data)=>{
-        //   console.log(data);
-        //   if(data.insertedId){
-        //     alert('Comment Added Successfully');
-           
-        //   }
-        //   reset();
-        // })
 
       }
       else {
@@ -151,16 +140,28 @@ const BookDetails = () => {
         return res.json();
       })
       .then((data)=>{
-        console.log(data)
+        // console.log(data)
         setComments(data);
        
       })
     },[])
 
-  
     // console.log(comments)
+const [bookcomment,setBookComment]= useState();
 
+    useEffect(() => {
+      if (Array.isArray(comments)) {
+          const filteredComments = comments.filter(comment => comment.comment.bookId === bookDetails._id);
+          setBookComment(filteredComments);
+      }
+      
+  }, [comments, params._id]);
 
+  if (!Array.isArray(comments) || comments.length === 0) {
+      return <div>No comments found for this book.</div>;
+  }
+
+console.log(bookcomment)
 
     const handleAddToCart =(item)=>{
         const {_id,name ,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer,imgUrl}=item;
@@ -313,8 +314,7 @@ const BookDetails = () => {
               ADD TO CART
             </button>
           </div>
-            </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
        <input
             type='text'
             placeholder='Add Your Comment'
@@ -323,17 +323,18 @@ const BookDetails = () => {
             {...register("comment", { required: true})}
           />
      <div>
-     <button
-              className="btn btn-outline uppercase border-0 border-b-4 mt-4"
+     <button className="btn btn-outline uppercase border-0 border-b-4 mt-4"
             >
           comment
             </button>
      </div>
        </form>
-    {/* { 
-      comments?.filter((comment)=><Comment key={comment._id} id={bookDetails._id} comment={comment}></Comment>)
-    } */}
-          </div>
+       { 
+      bookcomment?.map((comment)=><Comment key={comment._id} comment={comment}></Comment>)
+    }
+            </div>
+
+      </div>
         )}
  
       </main>
