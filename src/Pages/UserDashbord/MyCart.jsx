@@ -7,7 +7,16 @@ import useCart from '../Hooks/useCart';
 
 const MyCart = () => {
     const[cart,refetch] =useCart();
-    // console.log(cart);
+    console.log(cart);
+    // TODO 
+    // let quantity=0;
+    // for(const product of cart){
+    //     quantity=quantity + product.Quantity;
+    //     // total=parseInt(total + product.price*product.quantity);
+    //     console.log(product.Quentity);
+    // }
+    // console.log(quantity)
+   
      const totals =cart.reduce((sum,item)=> (item.offer
       ? item.discountPrice
       : item.regularPrice) +sum,0);

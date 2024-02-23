@@ -167,6 +167,7 @@ const [bookcomment,setBookComment]= useState();
         const {_id,name ,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer,imgUrl}=item;
         // console.log(item)
         if(user && user.email){
+       console.log(quentity)
           const orderItem ={menuItemId : _id,name:name,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer, email: user.email,imgUrl}
           console.log(orderItem)
           fetch('http://localhost:5000/carts',{

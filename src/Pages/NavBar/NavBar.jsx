@@ -11,7 +11,7 @@ const [cart] =useCart();
 const navOptions=<> 
 <li><Link to='/'>HOME</Link></li>
 <li><Link to='/'>BOOKS</Link></li>
-<li><Link to='/mycart'>ORDER</Link></li>
+<li><Link to='/dashboard/mycart'>ORDER</Link></li>
 <li>
  <Link to='/dashboard'>
  <button className="flex gap-2">
@@ -50,18 +50,6 @@ const navOptions=<>
             ) : (
               <Link className='btn btn-ghost normal-case text-xl' to='login'> Sign in</Link>
             )}
-
-{/* <div className="navbar-end">
-<div className="flex-none">
-     <div className="dropdown dropdown-end">
-       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-         <div className="w-10 rounded-full">
-           <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
-         </div>
-       </div>
-     </div>
-   </div>
-</div> */}
 </Link>
 </div>
   </>
