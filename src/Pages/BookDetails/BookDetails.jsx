@@ -161,13 +161,14 @@ const [bookcomment,setBookComment]= useState();
       return <div>No comments found for this book.</div>;
   }
 
-console.log(bookcomment)
+// console.log(bookcomment)
 
     const handleAddToCart =(item)=>{
         const {_id,name ,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer,imgUrl}=item;
         // console.log(item)
         if(user && user.email){
           const orderItem ={menuItemId : _id,name:name,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer, email: user.email,imgUrl}
+          console.log(orderItem)
           fetch('http://localhost:5000/carts',{
             method: 'POST',
             headers:{
