@@ -5,7 +5,7 @@ const Books = () => {
         queryKey:['book'],
         queryFn: async()=>{
             try {
-                const res = await fetch('http://localhost:5000/books');
+                const res = await fetch('https://books-server-2.onrender.com/books');
                 return res.json()
             } catch (error) {
                 console.error('Error fetching books:', error);

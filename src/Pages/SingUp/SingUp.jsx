@@ -63,7 +63,7 @@ const SingUp = () => {
             updateUser(data.name ,formData.photoURL)
             .then(()=>{
                 const saveUser= {name: data.name ,email: data.email,photoURL:formData.profilePhoto,gender:data.gender,age:data.age}
-                fetch('http://localhost:5000/users',{
+                fetch('https://books-server-2.onrender.com/users',{
                     method:"POST",
                     headers:{
                         "content-type":"application/json",

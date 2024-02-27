@@ -37,7 +37,7 @@ const BookDetails = () => {
     useEffect(()=>{
       try{
         setLoading(true)
-        fetch('http://localhost:5000/users')
+        fetch('https://books-server-2.onrender.com/users')
         .then((res)=> res.json())
         .then((data)=> {
          const userData= data;
@@ -65,7 +65,7 @@ const BookDetails = () => {
         const fetchBook=async()=>{
             try{
             setLoading(true);
-            const res = await fetch(`http://localhost:5000/books/${params.id}`)
+            const res = await fetch(`https://books-server-2.onrender.com/books/${params.id}`)
             const data = await res.json();
             if (data.success === false) {
                 setError(true);
@@ -94,7 +94,7 @@ const BookDetails = () => {
 
         try {
           setLoading(true)
-          axios.post('http://localhost:5000/comment', comment)
+          axios.post('https://books-server-2.onrender.com/comment', comment)
             .then((response) => {
               console.log(response.data);
               if (response.data.insertedId) {
@@ -132,7 +132,7 @@ const BookDetails = () => {
     // get comment
 
     useEffect(()=>{
-      fetch('http://localhost:5000/comment')
+      fetch('https://books-server-2.onrender.com/comment')
       .then((res)=> {
         if (!res.ok) {
           throw new Error('Network response was not ok');
@@ -151,7 +151,7 @@ const [bookcomment,setBookComment]= useState();
 
     useEffect(() => {
       if (Array.isArray(comments)) {
-          const filteredComments = comments.filter(comment => comment.comment.bookId === bookDetails._id);
+          const filteredComments = comments.filter(comment => comment.comment.bookId === bookDetails?._id);
           setBookComment(filteredComments);
       }
       
@@ -170,7 +170,7 @@ const [bookcomment,setBookComment]= useState();
        console.log(quentity)
           const orderItem ={menuItemId : _id,name:name,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer, email: user.email,imgUrl}
           console.log(orderItem)
-          fetch('http://localhost:5000/carts',{
+          fetch('https://books-server-2.onrender.com/carts',{
             method: 'POST',
             headers:{
               "content-type":"application/json"

@@ -54,7 +54,7 @@ const AuthProvider = ({children}) => {
         // setLoading(false);
 
         if(currentUser){
-            axios.post('http://localhost:5000/jwt',{
+            axios.post('https://books-server-2.onrender.com/jwt',{
                 email:currentUser.email
             })
             .then(data=>{

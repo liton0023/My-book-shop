@@ -52,7 +52,7 @@ const Search = () => {
         setLoading(true);
         setShowMore(false);
         const searchQuery = urlParams.toString();
-        const res = await fetch(`http://localhost:5000/books?${searchQuery}`);
+        const res = await fetch(`https://books-server-2.onrender.com/books?${searchQuery}`);
         const data = await res.json();
         if (data.length > 8) {
           setShowMore(true);
@@ -120,7 +120,7 @@ const Search = () => {
       const urlParams = new URLSearchParams(location.search);
       urlParams.set('startIndex', startIndex);
       const searchQuery = urlParams.toString();
-      const res = await fetch(`http://localhost:5000/books?${searchQuery}`);
+      const res = await fetch(`https://books-server-2.onrender.com/books?${searchQuery}`);
       const data = await res.json();
       if (data.length < 9) {
         setShowMore(false);

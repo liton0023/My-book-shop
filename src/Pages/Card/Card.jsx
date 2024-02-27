@@ -27,7 +27,7 @@ const Card = ({item}) => {
     // console.log(item)
     if(user && user.email){
       const orderItem ={menuItemId : _id,name:name,Book,category,Instoke,description,discountPrice,offer,regularPrice,stock,writer, email: user.email}
-      fetch('http://localhost:5000/carts',{
+      fetch('https://books-server-2.onrender.com/carts',{
         method: 'POST',
         headers:{
           "content-type":"application/json"
